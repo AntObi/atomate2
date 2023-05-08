@@ -1,0 +1,59 @@
+atomate2.vasp.jobs.base
+=======================
+
+.. automodule:: atomate2.vasp.jobs.base
+
+   
+
+
+
+   
+
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+      :nosignatures:
+   
+      get_vasp_task_document
+      vasp_job
+
+
+
+   
+
+
+
+   
+      
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+
+
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :nosignatures:
+   
+      BaseVaspMaker
+
+
+
+
+   
+   
+   
+
+
+
