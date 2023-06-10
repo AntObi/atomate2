@@ -30,6 +30,9 @@ atomate2.vasp.jobs.lobster
       
    
    
+      
+   
+   
    
    
    
@@ -49,6 +52,7 @@ atomate2.vasp.jobs.lobster
       :nosignatures:
    
       LobsterStaticMaker
+      TYPE_CHECKING
 
 
 

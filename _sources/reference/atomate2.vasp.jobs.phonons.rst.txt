@@ -34,6 +34,9 @@ atomate2.vasp.jobs.phonons
       
    
    
+      
+   
+   
    
    
    
@@ -54,6 +57,7 @@ atomate2.vasp.jobs.phonons
       :nosignatures:
    
       PhononDisplacementMaker
+      TYPE_CHECKING
       VaspToTHz
 
 

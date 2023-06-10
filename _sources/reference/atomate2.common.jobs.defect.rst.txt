@@ -33,6 +33,9 @@ atomate2.common.jobs.defect
       
    
    
+      
+   
+   
    
    
    
@@ -55,6 +58,7 @@ atomate2.common.jobs.defect
       :nosignatures:
    
       CCDInput
+      TYPE_CHECKING
 
 
 

@@ -19,6 +19,9 @@ atomate2.vasp.flows.elastic
       
    
    
+      
+   
+   
    
    
    
@@ -34,6 +37,7 @@ atomate2.vasp.flows.elastic
       :nosignatures:
    
       ElasticMaker
+      TYPE_CHECKING
 
 
 

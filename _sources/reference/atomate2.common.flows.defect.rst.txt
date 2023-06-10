@@ -25,6 +25,9 @@ atomate2.common.flows.defect
       
    
    
+      
+   
+   
    
    
    
@@ -41,6 +44,7 @@ atomate2.common.flows.defect
       ConfigurationCoordinateMaker
       DEFAULT_DISTORTIONS
       FormationEnergyMaker
+      TYPE_CHECKING
 
 
 

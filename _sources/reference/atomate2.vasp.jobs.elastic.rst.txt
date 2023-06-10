@@ -29,6 +29,9 @@ atomate2.vasp.jobs.elastic
       
    
    
+      
+   
+   
    
    
    
@@ -47,6 +50,7 @@ atomate2.vasp.jobs.elastic
       :nosignatures:
    
       ElasticRelaxMaker
+      TYPE_CHECKING
 
 
 

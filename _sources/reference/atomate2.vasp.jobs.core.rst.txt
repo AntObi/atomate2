@@ -49,6 +49,9 @@ atomate2.vasp.jobs.core
       
    
    
+      
+   
+   
    
    
    
@@ -72,6 +75,7 @@ atomate2.vasp.jobs.core
       NonSCFMaker
       RelaxMaker
       StaticMaker
+      TYPE_CHECKING
       TightRelaxMaker
       TransmuterMaker
 

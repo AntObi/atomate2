@@ -26,6 +26,7 @@ atomate2.vasp.files
 
 
    
+      
    
    
    
@@ -35,6 +36,17 @@ atomate2.vasp.files
    
    
    
+   
+   
+
+
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :nosignatures:
+   
+      TYPE_CHECKING
 
 
 

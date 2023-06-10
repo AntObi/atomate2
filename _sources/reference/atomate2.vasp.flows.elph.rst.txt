@@ -28,6 +28,9 @@ atomate2.vasp.flows.elph
       
    
    
+      
+   
+   
    
    
    
@@ -46,6 +49,7 @@ atomate2.vasp.flows.elph
       DEFAULT_MIN_SUPERCELL_LENGTH
       ElectronPhononMaker
       HSEElectronPhononMaker
+      TYPE_CHECKING
 
 
 

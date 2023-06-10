@@ -28,6 +28,9 @@ atomate2.vasp.run
       
    
    
+      
+   
+   
    
    
    
@@ -47,6 +50,7 @@ atomate2.vasp.run
       :nosignatures:
    
       JobType
+      TYPE_CHECKING
 
 
 

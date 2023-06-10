@@ -30,6 +30,9 @@ atomate2.lobster.files
       
    
    
+      
+   
+   
    
    
    
@@ -46,6 +49,7 @@ atomate2.lobster.files
       :nosignatures:
    
       LOBSTEROUTPUT_FILES
+      TYPE_CHECKING
       VASP_OUTPUT_FILES
 
 

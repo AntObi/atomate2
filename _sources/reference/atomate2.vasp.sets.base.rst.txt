@@ -22,6 +22,9 @@ atomate2.vasp.sets.base
       
    
    
+      
+   
+   
    
    
    
@@ -45,6 +48,7 @@ atomate2.vasp.sets.base
       :toctree:
       :nosignatures:
    
+      TYPE_CHECKING
       VaspInputGenerator
       VaspInputSet
 

@@ -46,6 +46,9 @@ atomate2.vasp.sets.core
       
    
    
+      
+   
+   
    
    
    
@@ -70,6 +73,7 @@ atomate2.vasp.sets.core
       NonSCFSetGenerator
       RelaxSetGenerator
       StaticSetGenerator
+      TYPE_CHECKING
       TightRelaxSetGenerator
 
 

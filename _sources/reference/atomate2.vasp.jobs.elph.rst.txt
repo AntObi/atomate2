@@ -34,6 +34,9 @@ atomate2.vasp.jobs.elph
       
    
    
+      
+   
+   
    
    
    
@@ -53,6 +56,7 @@ atomate2.vasp.jobs.elph
       DEFAULT_ELPH_TEMPERATURES
       DEFAULT_MIN_SUPERCELL_LENGTH
       SupercellElectronPhononDisplacedStructureMaker
+      TYPE_CHECKING
 
 
 

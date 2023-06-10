@@ -19,6 +19,9 @@ atomate2.vasp.builders.elastic
       
    
    
+      
+   
+   
    
    
    
@@ -35,6 +38,7 @@ atomate2.vasp.builders.elastic
       :nosignatures:
    
       ElasticBuilder
+      TYPE_CHECKING
 
 
 

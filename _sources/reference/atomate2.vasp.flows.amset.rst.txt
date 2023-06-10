@@ -25,6 +25,9 @@ atomate2.vasp.flows.amset
       
    
    
+      
+   
+   
    
    
    
@@ -43,6 +46,7 @@ atomate2.vasp.flows.amset
    
       DeformationPotentialMaker
       HSEVaspAmsetMaker
+      TYPE_CHECKING
       VaspAmsetMaker
 
 

@@ -39,6 +39,9 @@ atomate2.vasp.jobs.amset
       
    
    
+      
+   
+   
    
    
    
@@ -62,6 +65,7 @@ atomate2.vasp.jobs.amset
       HSEDenseUniformMaker
       HSEStaticDeformationMaker
       StaticDeformationMaker
+      TYPE_CHECKING
 
 
 
