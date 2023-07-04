@@ -773,6 +773,7 @@
         <span class="n">order</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">equilibrium_stress</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Matrix3D</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">symprec</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">SETTINGS</span><span class="o">.</span><span class="n">SYMPREC</span><span class="p">,</span>
+        <span class="n">allow_elastically_unstable_structs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create an elastic document from strains and stresses.</span>
@@ -802,6 +803,9 @@
 <span class="sd">        symprec : float</span>
 <span class="sd">            Symmetry precision for deriving symmetry equivalent deformations. If</span>
 <span class="sd">            ``symprec=None``, then no symmetry operations will be applied.</span>
+<span class="sd">        allow_elastically_unstable_structs : bool</span>
+<span class="sd">            Whether to allow the ElasticDocument to still complete in the event that</span>
+<span class="sd">            the structure is elastically unstable.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">symprec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">deformations</span><span class="p">,</span> <span class="n">stresses</span><span class="p">,</span> <span class="n">uuids</span><span class="p">,</span> <span class="n">job_dirs</span> <span class="o">=</span> <span class="n">_expand_deformations</span><span class="p">(</span>
@@ -837,7 +841,12 @@
 
         <span class="n">ieee</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">convert_to_ieee</span><span class="p">(</span><span class="n">structure</span><span class="p">)</span>
         <span class="n">property_tensor</span> <span class="o">=</span> <span class="n">ieee</span> <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">ElasticTensor</span><span class="p">(</span><span class="n">ieee</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="n">property_dict</span> <span class="o">=</span> <span class="n">property_tensor</span><span class="o">.</span><span class="n">get_structure_property_dict</span><span class="p">(</span><span class="n">structure</span><span class="p">)</span>
+
+        <span class="n">ignore_errors</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">allow_elastically_unstable_structs</span><span class="p">)</span>
+        <span class="n">property_dict</span> <span class="o">=</span> <span class="n">property_tensor</span><span class="o">.</span><span class="n">get_structure_property_dict</span><span class="p">(</span>
+            <span class="n">structure</span><span class="p">,</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="n">ignore_errors</span>
+        <span class="p">)</span>
+
         <span class="n">derived_properties</span> <span class="o">=</span> <span class="n">DerivedProperties</span><span class="p">(</span><span class="o">**</span><span class="n">property_dict</span><span class="p">)</span>
 
         <span class="n">eq_stress</span> <span class="o">=</span> <span class="n">eq_stress</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="k">if</span> <span class="n">eq_stress</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">eq_stress</span>

@@ -623,7 +623,7 @@
         </div>
         <article role="main">
           <h1>Source code for atomate2.lobster.schemas</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Module defining amset document schemas.&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;Module defining lobster document schemas.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">time</span>
@@ -1205,8 +1205,7 @@
             <span class="n">charges</span><span class="o">=</span><span class="n">charges</span><span class="p">,</span>
             <span class="n">madelung_energies</span><span class="o">=</span><span class="n">madelung_energies</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">doc</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">update</span><span class="o">=</span><span class="n">additional_fields</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">doc</span></div></div>
+        <span class="k">return</span> <span class="n">doc</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">update</span><span class="o">=</span><span class="n">additional_fields</span><span class="p">)</span></div></div>
 
 
 <span class="k">def</span> <span class="nf">_identify_strongest_bonds</span><span class="p">(</span>
