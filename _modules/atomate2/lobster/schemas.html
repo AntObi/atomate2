@@ -637,12 +637,15 @@
 <span class="kn">from</span> <span class="nn">pymatgen.electronic_structure.cohp</span> <span class="kn">import</span> <span class="n">CompleteCohp</span>
 <span class="kn">from</span> <span class="nn">pymatgen.electronic_structure.dos</span> <span class="kn">import</span> <span class="n">LobsterCompleteDos</span>
 <span class="kn">from</span> <span class="nn">pymatgen.io.lobster</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Bandoverlaps</span><span class="p">,</span>
     <span class="n">Charge</span><span class="p">,</span>
     <span class="n">Doscar</span><span class="p">,</span>
+    <span class="n">Grosspop</span><span class="p">,</span>
     <span class="n">Icohplist</span><span class="p">,</span>
     <span class="n">Lobsterin</span><span class="p">,</span>
     <span class="n">Lobsterout</span><span class="p">,</span>
     <span class="n">MadelungEnergies</span><span class="p">,</span>
+    <span class="n">SitePotential</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">atomate2</span> <span class="kn">import</span> <span class="n">__version__</span>
@@ -704,19 +707,20 @@
     <span class="p">)</span>
     <span class="n">has_charge</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Bool indicating if CHARGE is present.&quot;</span><span class="p">)</span>
     <span class="n">has_madelung</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
-        <span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Bool indicating if Madelung file is present.&quot;</span>
+        <span class="kc">None</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Bool indicating if Site Potentials and Madelung file is present.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">has_projection</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Bool indicating if projection file is present.&quot;</span>
     <span class="p">)</span>
     <span class="n">has_bandoverlaps</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
-        <span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Bool indicating if BANDOVERLAPS file is presetn&quot;</span>
+        <span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Bool indicating if BANDOVERLAPS file is present&quot;</span>
     <span class="p">)</span>
     <span class="n">has_fatbands</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Bool indicating if Fatbands are present.&quot;</span>
     <span class="p">)</span>
     <span class="n">has_grosspopulation</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
-        <span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Bool indicating if GrossPopulations file is present.&quot;</span>
+        <span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Bool indicating if GROSSPOP file is present.&quot;</span>
     <span class="p">)</span>
     <span class="n">has_density_of_energies</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Bool indicating if DensityofEnergies is present&quot;</span>
@@ -1024,6 +1028,24 @@
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Madelung energies dict from&quot;</span>
         <span class="s2">&quot; LOBSTER based on Mulliken and Loewdin charges&quot;</span><span class="p">,</span>
     <span class="p">)</span>
+    <span class="n">site_potentials</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="kc">None</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Site potentials dict from&quot;</span>
+        <span class="s2">&quot; LOBSTER based on Mulliken and Loewdin charges&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">gross_populations</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="kc">None</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Gross populations dict from&quot;</span>
+        <span class="s2">&quot; LOBSTER based on Mulliken and Loewdin charges with&quot;</span>
+        <span class="s2">&quot;each site as a key and the gross population as a value.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">band_overlaps</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="kc">None</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Band overlaps data for each k-point from&quot;</span>
+        <span class="s2">&quot; bandOverlaps.lobster file if it exists&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
 
     <span class="n">_schema</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="n">__version__</span><span class="p">,</span>
@@ -1079,6 +1101,9 @@
         <span class="n">doscar_path</span> <span class="o">=</span> <span class="n">dir_name</span> <span class="o">/</span> <span class="s2">&quot;DOSCAR.lobster.gz&quot;</span>
         <span class="n">structure_path</span> <span class="o">=</span> <span class="n">dir_name</span> <span class="o">/</span> <span class="s2">&quot;POSCAR.gz&quot;</span>
         <span class="n">madelung_energies_path</span> <span class="o">=</span> <span class="n">dir_name</span> <span class="o">/</span> <span class="s2">&quot;MadelungEnergies.lobster.gz&quot;</span>
+        <span class="n">site_potentials_path</span> <span class="o">=</span> <span class="n">dir_name</span> <span class="o">/</span> <span class="s2">&quot;SitePotentials.lobster.gz&quot;</span>
+        <span class="n">gross_populations_path</span> <span class="o">=</span> <span class="n">dir_name</span> <span class="o">/</span> <span class="s2">&quot;GROSSPOP.lobster.gz&quot;</span>
+        <span class="n">band_overlaps_path</span> <span class="o">=</span> <span class="n">dir_name</span> <span class="o">/</span> <span class="s2">&quot;bandOverlaps.lobster.gz&quot;</span>
 
         <span class="c1"># Do automatic bonding analysis with LobsterPy</span>
         <span class="n">condensed_bonding_analysis</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1178,6 +1203,37 @@
                 <span class="s2">&quot;Ewald_splitting&quot;</span><span class="p">:</span> <span class="n">madelung_obj</span><span class="o">.</span><span class="n">ewald_splitting</span><span class="p">,</span>
             <span class="p">}</span>
 
+        <span class="c1"># Read in Site Potentials</span>
+        <span class="n">site_potentials</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">site_potentials_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">site_potentials_obj</span> <span class="o">=</span> <span class="n">SitePotential</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">site_potentials_path</span><span class="p">)</span>
+
+            <span class="n">site_potentials</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;Mulliken&quot;</span><span class="p">:</span> <span class="n">site_potentials_obj</span><span class="o">.</span><span class="n">sitepotentials_Mulliken</span><span class="p">,</span>
+                <span class="s2">&quot;Loewdin&quot;</span><span class="p">:</span> <span class="n">site_potentials_obj</span><span class="o">.</span><span class="n">sitepotentials_Loewdin</span><span class="p">,</span>
+                <span class="s2">&quot;Ewald_splitting&quot;</span><span class="p">:</span> <span class="n">site_potentials_obj</span><span class="o">.</span><span class="n">ewald_splitting</span><span class="p">,</span>
+            <span class="p">}</span>
+
+        <span class="c1"># Read in Gross Populations</span>
+        <span class="n">gross_populations</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">gross_populations_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">gross_populations_obj</span> <span class="o">=</span> <span class="n">Grosspop</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">gross_populations_path</span><span class="p">)</span>
+
+            <span class="n">gross_populations</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">atom_index</span><span class="p">,</span> <span class="n">gross_pop</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+                <span class="n">gross_populations_obj</span><span class="o">.</span><span class="n">list_dict_grosspop</span>
+            <span class="p">):</span>
+                <span class="n">gross_populations</span><span class="p">[</span><span class="n">atom_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">gross_pop</span>
+
+        <span class="c1"># Read in Band overlaps</span>
+        <span class="n">band_overlaps</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">band_overlaps_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">band_overlaps_obj</span> <span class="o">=</span> <span class="n">Bandoverlaps</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">band_overlaps_path</span><span class="p">)</span>
+
+            <span class="n">band_overlaps</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">spin</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">band_overlaps_obj</span><span class="o">.</span><span class="n">bandoverlapsdict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">band_overlaps</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">spin</span><span class="o">.</span><span class="n">value</span><span class="p">)]</span> <span class="o">=</span> <span class="n">value</span>
+
         <span class="n">doc</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="n">structure</span><span class="o">=</span><span class="n">struct</span><span class="p">,</span>
             <span class="n">dir_name</span><span class="o">=</span><span class="n">dir_name</span><span class="p">,</span>
@@ -1204,6 +1260,9 @@
             <span class="n">lso_dos</span><span class="o">=</span><span class="n">lso_dos</span><span class="p">,</span>
             <span class="n">charges</span><span class="o">=</span><span class="n">charges</span><span class="p">,</span>
             <span class="n">madelung_energies</span><span class="o">=</span><span class="n">madelung_energies</span><span class="p">,</span>
+            <span class="n">site_potentials</span><span class="o">=</span><span class="n">site_potentials</span><span class="p">,</span>
+            <span class="n">gross_populations</span><span class="o">=</span><span class="n">gross_populations</span><span class="p">,</span>
+            <span class="n">band_overlaps</span><span class="o">=</span><span class="n">band_overlaps</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">doc</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">update</span><span class="o">=</span><span class="n">additional_fields</span><span class="p">)</span></div></div>
 

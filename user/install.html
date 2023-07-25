@@ -640,11 +640,11 @@
 workflows with atomate2. atomate2 is built on the pymatgen, custodian, jobflow, and
 FireWorks libraries. Briefly:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="http://pymatgen.org">pymatgen</a> is used create input files and analyze the output of materials science codes.</p></li>
-<li><p><a class="reference external" href="https://materialsproject.github.io/custodian/">custodian</a> runs your simulation code (e.g., VASP) and performs error checking/handling
+<li><p><a class="reference external" href="http://pymatgen.org">pymatgen</a> is used to create input files and analyze the output of materials science codes.</p></li>
+<li><p><a class="reference external" href="https://materialsproject.github.io/custodian">custodian</a> runs your simulation code (e.g., VASP) and performs error checking/handling
 and checkpointing.</p></li>
-<li><p><a class="reference external" href="https://materialsproject.github.io/jobflow/">jobflow</a> is used to design computational workflows.</p></li>
-<li><p><a class="reference external" href="https://materialsproject.github.io/fireworks/">FireWorks</a> (optional) is used to manage and execute workflows on HPC machines.</p></li>
+<li><p><a class="reference external" href="https://materialsproject.github.io/jobflow">jobflow</a> is used to design computational workflows.</p></li>
+<li><p><a class="reference external" href="https://materialsproject.github.io/fireworks">FireWorks</a> (optional) is used to manage and execute workflows on HPC machines.</p></li>
 </ul>
 <p>Running and writing your own workflows are covered in later tutorials. For now, these
 topics will be covered in enough depth to get you set up and to help you know where to
@@ -692,8 +692,8 @@ tutorial.</p>
 </section>
 <section id="mongodb">
 <h3>MongoDB<a class="headerlink" href="#mongodb" title="Permalink to this heading">#</a></h3>
-<p><a class="reference external" href="https://docs.mongodb.com/manual/">MongoDB</a> is a NoSQL database that stores each database
-entry as a document, which is represented in the JSON format (the formatting is similar to
+<p><a class="reference external" href="https://docs.mongodb.com/manual">MongoDB</a> is a NoSQL database that stores each database
+entry as a document, which is represented in JSON format (the formatting is similar to
 a dictionary in Python). Atomate2 uses MongoDB to:</p>
 <ul class="simple">
 <li><p>Create a database of calculation results.</p></li>
@@ -705,7 +705,7 @@ workflows. Thus, it is strongly recommended that you have a server to run MongoD
 (simpler) use a hosting service. Your options are:</p>
 <ul class="simple">
 <li><p>Use a commercial service to host your MongoDB instance. These are typically the
-easiest to use and offer high quality service but require payment for larger
+easiest to use and offer high-quality service but require payment for larger
 databases. <a class="reference external" href="https://www.mongodb.com/cloud/atlas">MongoDB Atlas</a> offers a free 500 MB
 server which is certainly enough to get started for small to medium size projects, and
 it is easy to upgrade or migrate your database if you exceed the free allocation.</p></li>
@@ -717,7 +717,7 @@ has this, Google “request NERSC MongoDB database”).</p></li>
 (if available to you). The third option will require you to open up network settings to
 accept outside connections properly which can sometimes be tricky.</p>
 <p>Next, create a new database and set up an account with admin access. Keep a record of
-your credentials - we will configure jobflow to connect to them in a later step. Also
+your credentials - we will configure <code class="docutils literal notranslate"><span class="pre">jobflow</span></code> to connect to them in a later step. Also,
 make sure you note down the hostname and port for the MongoDB instance.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -779,7 +779,7 @@ machine.</p></li>
 this solves permissions issues with installing and modifying packages.</p></li>
 </ul>
 <p>The easiest way to get a Python virtual environment is to use the <code class="docutils literal notranslate"><span class="pre">conda</span></code> tool.
-Most clusters (e.g., NESRC) have <a class="reference external" href="https://www.continuum.io">Anaconda</a> installed already
+Most clusters (e.g., NESRC) have <a class="reference external" href="https://continuum.io">Anaconda</a> installed already
 which provides access to the <code class="docutils literal notranslate"><span class="pre">conda</span></code> binary. If the <code class="docutils literal notranslate"><span class="pre">conda</span></code> tool is not available, you can
 install it by following the installation instructions for
 <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a>. To set up your conda environment:</p>
@@ -824,7 +824,7 @@ that are unique only to these databases.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">jobflow.yaml</span></code> file contains the credentials of the MongoDB server that will store
 calculation outputs. The <code class="docutils literal notranslate"><span class="pre">jobflow.yaml</span></code> file requires you to enter the basic database
 information as well as what to call the main collection that results are kept in (e.g.
-<code class="docutils literal notranslate"><span class="pre">ouputs</span></code>). Note that you should replace the whole <code class="docutils literal notranslate"><span class="pre">&lt;&lt;PROPERTY&gt;&gt;</span></code> definition with
+<code class="docutils literal notranslate"><span class="pre">outputs</span></code>). Note that you should replace the whole <code class="docutils literal notranslate"><span class="pre">&lt;&lt;PROPERTY&gt;&gt;</span></code> definition with
 your own settings.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">JOB_STORE</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">docs_store</span><span class="p">:</span>
@@ -929,10 +929,14 @@ and then return to this tutorial.</p>
 <section id="materials-project-api-key">
 <h3>Materials Project API key<a class="headerlink" href="#materials-project-api-key" title="Permalink to this heading">#</a></h3>
 <p>You can get an API key from the <a class="reference external" href="https://materialsproject.org/dashboard">Materials Project</a> by logging in and going to your
-<a class="reference external" href="https://materialsproject.org/dashboard">Dashboard</a>. Add this also to
-your <code class="docutils literal notranslate"><span class="pre">~/.pmgrc.yaml</span></code> so that it looks like the following</p>
+[Dashboard](materials project). Add this also to
+your <code class="docutils literal notranslate"><span class="pre">~/.config/.pmgrc.yaml</span></code> so that it looks like the following</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">PMG_VASP_PSP_DIR</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;&lt;INSTALL_DIR&gt;&gt;/pps</span>
 <span class="nt">PMG_MAPI_KEY</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;&lt;YOUR_API_KEY&gt;&gt;</span>
+</pre></div>
+</div>
+<p>You can generate this file and set these values using the <code class="docutils literal notranslate"><span class="pre">pymatgen</span></code> CLI:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pmg<span class="w"> </span>config<span class="w"> </span>--add<span class="w"> </span>PMG_VASP_PSP_DIR<span class="w"> </span>/abs/path/to/psp<span class="w"> </span>PMG_MAPI_KEY<span class="w"> </span>your_api_key
 </pre></div>
 </div>
 </section>
@@ -1046,7 +1050,7 @@ section of the documentation.</p>
 <h2>Troubleshooting and FAQ<a class="headerlink" href="#troubleshooting-and-faq" title="Permalink to this heading">#</a></h2>
 <section id="my-job-failed">
 <h3>My job failed<a class="headerlink" href="#my-job-failed" title="Permalink to this heading">#</a></h3>
-<p>Check the job error files in the launch directory for any errors. Also check the job
+<p>Check the job error files in the launch directory for any errors. Also, check the job
 standard output for a full log of the workflow execution and to check for a Python
 traceback.</p>
 </section>

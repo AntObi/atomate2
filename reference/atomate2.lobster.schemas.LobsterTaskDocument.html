@@ -770,6 +770,24 @@
 <dd><p>Madelung energies dict from LOBSTER based on Mulliken and Loewdin charges</p>
 </dd></dl>
 
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="atomate2.lobster.schemas.LobsterTaskDocument.site_potentials">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">site_potentials</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)"><span class="pre">dict</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#atomate2.lobster.schemas.LobsterTaskDocument.site_potentials" title="Permalink to this definition">#</a></dt>
+<dd><p>Site potentials dict from LOBSTER based on Mulliken and Loewdin charges</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="atomate2.lobster.schemas.LobsterTaskDocument.gross_populations">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">gross_populations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)"><span class="pre">dict</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#atomate2.lobster.schemas.LobsterTaskDocument.gross_populations" title="Permalink to this definition">#</a></dt>
+<dd><p>Gross populations dict from LOBSTER based on Mulliken and Loewdin charges witheach site as a key and the gross population as a value.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="atomate2.lobster.schemas.LobsterTaskDocument.band_overlaps">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">band_overlaps</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)"><span class="pre">dict</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#atomate2.lobster.schemas.LobsterTaskDocument.band_overlaps" title="Permalink to this definition">#</a></dt>
+<dd><p>Band overlaps data for each k-point from bandOverlaps.lobster file if it exists</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="atomate2.lobster.schemas.LobsterTaskDocument.from_directory">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_lso_dos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_cohp_plots</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/atomate2/lobster/schemas.html#LobsterTaskDocument.from_directory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#atomate2.lobster.schemas.LobsterTaskDocument.from_directory" title="Permalink to this definition">#</a></dt>
@@ -883,6 +901,9 @@ from lobsterpy will be generated.</p></li>
 <li><a class="reference internal" href="#atomate2.lobster.schemas.LobsterTaskDocument.dos"><code class="docutils literal notranslate"><span class="pre">LobsterTaskDocument.dos</span></code></a></li>
 <li><a class="reference internal" href="#atomate2.lobster.schemas.LobsterTaskDocument.lso_dos"><code class="docutils literal notranslate"><span class="pre">LobsterTaskDocument.lso_dos</span></code></a></li>
 <li><a class="reference internal" href="#atomate2.lobster.schemas.LobsterTaskDocument.madelung_energies"><code class="docutils literal notranslate"><span class="pre">LobsterTaskDocument.madelung_energies</span></code></a></li>
+<li><a class="reference internal" href="#atomate2.lobster.schemas.LobsterTaskDocument.site_potentials"><code class="docutils literal notranslate"><span class="pre">LobsterTaskDocument.site_potentials</span></code></a></li>
+<li><a class="reference internal" href="#atomate2.lobster.schemas.LobsterTaskDocument.gross_populations"><code class="docutils literal notranslate"><span class="pre">LobsterTaskDocument.gross_populations</span></code></a></li>
+<li><a class="reference internal" href="#atomate2.lobster.schemas.LobsterTaskDocument.band_overlaps"><code class="docutils literal notranslate"><span class="pre">LobsterTaskDocument.band_overlaps</span></code></a></li>
 <li><a class="reference internal" href="#atomate2.lobster.schemas.LobsterTaskDocument.from_directory"><code class="docutils literal notranslate"><span class="pre">LobsterTaskDocument.from_directory()</span></code></a></li>
 </ul>
 </li>

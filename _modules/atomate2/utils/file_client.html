@@ -1141,7 +1141,7 @@
     <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
         <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
         <span class="k">def</span> <span class="nf">gen_fileclient</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="n">file_client</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;file_client&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">file_client</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;file_client&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">file_client</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">with</span> <span class="n">FileClient</span><span class="p">()</span> <span class="k">as</span> <span class="n">file_client</span><span class="p">:</span>
                     <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;file_client&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file_client</span>

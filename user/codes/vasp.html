@@ -966,9 +966,8 @@ adjust them if necessary. The default might not be strict enough
 for your specific case.</p>
 </div>
 </section>
-</section>
 <section id="lobster">
-<h2>Lobster<a class="headerlink" href="#lobster" title="Permalink to this heading">#</a></h2>
+<h3>Lobster<a class="headerlink" href="#lobster" title="Permalink to this heading">#</a></h3>
 <p>Perform bonding analysis with <a class="reference external" href="http://cohp.de/">LOBSTER</a> and <a class="reference external" href="https://github.com/jageo/lobsterpy">LobsterPy</a></p>
 <p>Initially, a structural relaxation is performed. Within a static run, the wave function is pre-converged
 with symmetry switched on. Then, another static run with the correct number of bands and without
@@ -980,7 +979,30 @@ analysis of the output files from LOBSTER.</p>
 <span class="nt">LOBSTER_CMD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;&lt;LOBSTER_CMD&gt;&gt;</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="https://github.com/materialsproject/fireworks">FireWorks</a> allows to run the VASP and Lobster jobs with different job scripts. Please check out the <a class="reference external" href="https://materialsproject.github.io/jobflow/tutorials/8-fireworks.html#setting-the-manager-configs">jobflow documentation on FireWorks</a> for more information.</p>
+<p>The corresponding flow could, for example, be started with the following code:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jobflow</span> <span class="kn">import</span> <span class="n">SETTINGS</span>
+<span class="kn">from</span> <span class="nn">jobflow</span> <span class="kn">import</span> <span class="n">run_locally</span>
+<span class="kn">from</span> <span class="nn">pymatgen.core.structure</span> <span class="kn">import</span> <span class="n">Structure</span>
+
+<span class="kn">from</span> <span class="nn">atomate2.vasp.flows.lobster</span> <span class="kn">import</span> <span class="n">VaspLobsterMaker</span>
+<span class="kn">from</span> <span class="nn">atomate2.vasp.powerups</span> <span class="kn">import</span> <span class="n">update_user_incar_settings</span>
+
+<span class="n">structure</span> <span class="o">=</span> <span class="n">Structure</span><span class="p">(</span>
+    <span class="n">lattice</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2.13</span><span class="p">,</span> <span class="mf">2.13</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.13</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">2.13</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.13</span><span class="p">,</span> <span class="mf">2.13</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span>
+    <span class="n">species</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Mg&quot;</span><span class="p">,</span> <span class="s2">&quot;O&quot;</span><span class="p">],</span>
+    <span class="n">coords</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]],</span>
+<span class="p">)</span>
+
+<span class="n">lobster</span> <span class="o">=</span> <span class="n">VaspLobsterMaker</span><span class="p">()</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="n">structure</span><span class="p">)</span>
+
+<span class="c1"># update the incar</span>
+<span class="n">lobster</span> <span class="o">=</span> <span class="n">update_user_incar_settings</span><span class="p">(</span><span class="n">lobster</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;NPAR&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">})</span>
+<span class="c1"># run the job</span>
+<span class="n">run_locally</span><span class="p">(</span><span class="n">lobster</span><span class="p">,</span> <span class="n">create_folders</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">store</span><span class="o">=</span><span class="n">SETTINGS</span><span class="o">.</span><span class="n">JOB_STORE</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It is, however,  computationally very beneficial to define two different types of job scripts for the VASP and Lobster runs, as VASP and Lobster runs are parallelized differently (MPI vs. OpenMP).
+<a class="reference external" href="https://github.com/materialsproject/fireworks">FireWorks</a> allows to run the VASP and Lobster jobs with different job scripts. Please check out the <a class="reference external" href="https://materialsproject.github.io/jobflow/tutorials/8-fireworks.html#setting-the-manager-configs">jobflow documentation on FireWorks</a> for more information.</p>
 <p>Outputs from the automatic analysis with LobsterPy can easily be extracted from the database and also plotted:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jobflow</span> <span class="kn">import</span> <span class="n">SETTINGS</span>
 <span class="kn">from</span> <span class="nn">pymatgen.electronic_structure.cohp</span> <span class="kn">import</span> <span class="n">Cohp</span>
@@ -1015,6 +1037,7 @@ analysis of the output files from LOBSTER.</p>
     <span class="n">plotter</span><span class="o">.</span><span class="n">save_plot</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;plots_cation_anion_bonds</span><span class="si">{</span><span class="n">number</span><span class="si">}</span><span class="s2">.pdf&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</section>
 </section>
 <section id="modifying-input-sets">
 <span id="id1"></span><h2>Modifying input sets<a class="headerlink" href="#modifying-input-sets" title="Permalink to this heading">#</a></h2>
@@ -1241,9 +1264,9 @@ calculation and a static calculation.</p>
 <li><a class="reference internal" href="#optics">Optics</a></li>
 <li><a class="reference internal" href="#hse06-optics">HSE06 Optics</a></li>
 <li><a class="reference internal" href="#phonons">Phonons</a></li>
+<li><a class="reference internal" href="#lobster">Lobster</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#lobster">Lobster</a></li>
 <li><a class="reference internal" href="#modifying-input-sets">Modifying input sets</a></li>
 <li><a class="reference internal" href="#chaining-workflows">Chaining workflows</a></li>
 </ul>
