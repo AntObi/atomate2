@@ -838,16 +838,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">input_set_generator</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
 
-        <span class="k">if</span> <span class="s2">&quot;parse_dos&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_document_kwargs</span><span class="p">:</span>
-            <span class="c1"># parse DOS only for uniform band structure</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">task_document_kwargs</span><span class="p">[</span><span class="s2">&quot;parse_dos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;uniform&quot;</span>
-
-        <span class="k">if</span> <span class="s2">&quot;parse_bandstructure&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_document_kwargs</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">task_document_kwargs</span><span class="p">[</span><span class="s2">&quot;parse_bandstructure&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mode</span>
-
+        <span class="c1"># parse DOS only for uniform band structure</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task_document_kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;parse_dos&quot;</span><span class="p">,</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task_document_kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;parse_bandstructure&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
         <span class="c1"># copy previous inputs</span>
-        <span class="k">if</span> <span class="s2">&quot;additional_vasp_files&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy_vasp_kwargs</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">copy_vasp_kwargs</span><span class="p">[</span><span class="s2">&quot;additional_vasp_files&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;CHGCAR&quot;</span><span class="p">,)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">copy_vasp_kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;additional_vasp_files&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;CHGCAR&quot;</span><span class="p">,))</span>
 
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">make</span><span class="o">.</span><span class="n">original</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structure</span><span class="p">,</span> <span class="n">prev_vasp_dir</span><span class="p">)</span></div></div>
 
@@ -1026,20 +1021,15 @@
             <span class="p">)</span>
             <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;uniform&quot;</span>
 
-        <span class="k">if</span> <span class="s2">&quot;parse_dos&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_document_kwargs</span><span class="p">:</span>
-            <span class="c1"># parse DOS only for uniform band structure</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">task_document_kwargs</span><span class="p">[</span><span class="s2">&quot;parse_dos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;uniform&quot;</span> <span class="ow">in</span> <span class="n">mode</span>
+        <span class="c1"># parse DOS only for uniform band structure</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task_document_kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;parse_dos&quot;</span><span class="p">,</span> <span class="s2">&quot;uniform&quot;</span> <span class="ow">in</span> <span class="n">mode</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="s2">&quot;parse_bandstructure&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_document_kwargs</span><span class="p">:</span>
-            <span class="n">parse_bandstructure</span> <span class="o">=</span> <span class="s2">&quot;uniform&quot;</span> <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;gap&quot;</span> <span class="k">else</span> <span class="n">mode</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">task_document_kwargs</span><span class="p">[</span><span class="s2">&quot;parse_bandstructure&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parse_bandstructure</span>
+        <span class="n">parse_bandstructure</span> <span class="o">=</span> <span class="s2">&quot;uniform&quot;</span> <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;gap&quot;</span> <span class="k">else</span> <span class="n">mode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task_document_kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;parse_bandstructure&quot;</span><span class="p">,</span> <span class="n">parse_bandstructure</span><span class="p">)</span>
 
         <span class="c1"># copy previous inputs</span>
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="n">prev_vasp_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-            <span class="ow">and</span> <span class="s2">&quot;additional_vasp_files&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy_vasp_kwargs</span>
-        <span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">copy_vasp_kwargs</span><span class="p">[</span><span class="s2">&quot;additional_vasp_files&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;CHGCAR&quot;</span><span class="p">,)</span>
+        <span class="k">if</span> <span class="n">prev_vasp_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">copy_vasp_kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;additional_vasp_files&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;CHGCAR&quot;</span><span class="p">,))</span>
 
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">make</span><span class="o">.</span><span class="n">original</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structure</span><span class="p">,</span> <span class="n">prev_vasp_dir</span><span class="p">)</span></div></div>
 
@@ -1155,9 +1145,8 @@
         <span class="n">structure</span> <span class="o">=</span> <span class="n">transmuter</span><span class="o">.</span><span class="n">transformed_structures</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">final_structure</span>
 
         <span class="c1"># to avoid MongoDB errors, &quot;:&quot; is automatically converted to &quot;.&quot;</span>
-        <span class="k">if</span> <span class="s2">&quot;transformations:json&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_additional_data</span><span class="p">:</span>
-            <span class="n">tjson</span> <span class="o">=</span> <span class="n">transmuter</span><span class="o">.</span><span class="n">transformed_structures</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">write_additional_data</span><span class="p">[</span><span class="s2">&quot;transformations:json&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tjson</span>
+        <span class="n">tjson</span> <span class="o">=</span> <span class="n">transmuter</span><span class="o">.</span><span class="n">transformed_structures</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_additional_data</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;transformations:json&quot;</span><span class="p">,</span> <span class="n">tjson</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">make</span><span class="o">.</span><span class="n">original</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structure</span><span class="p">,</span> <span class="n">prev_vasp_dir</span><span class="p">)</span></div></div>
 
