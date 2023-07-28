@@ -788,9 +788,9 @@
         <span class="n">deformation_mapping</span> <span class="o">=</span> <span class="n">symmetry_reduce</span><span class="p">(</span><span class="n">deformations</span><span class="p">,</span> <span class="n">structure</span><span class="p">,</span> <span class="n">symprec</span><span class="o">=</span><span class="n">symprec</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Using symmetry to reduce number of deformations from </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">deformations</span><span class="p">)</span><span class="si">}</span><span class="s2"> &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;to </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">deformation_mapping</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;to </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">deformation_mapping</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
-        <span class="n">deformations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">deformation_mapping</span><span class="p">)</span>
+        <span class="n">deformations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">deformation_mapping</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
     <span class="k">return</span> <span class="n">deformations</span></div>
 

@@ -761,7 +761,8 @@
         <span class="k">if</span> <span class="n">prev_vasp_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">copy_vasp_outputs</span><span class="p">(</span><span class="n">prev_vasp_dir</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">copy_vasp_kwargs</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_input_set_kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;from_prev&quot;</span><span class="p">,</span> <span class="n">from_prev</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;from_prev&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_input_set_kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_input_set_kwargs</span><span class="p">[</span><span class="s2">&quot;from_prev&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">from_prev</span>
 
         <span class="c1"># write vasp input files</span>
         <span class="n">write_vasp_input_set</span><span class="p">(</span>
@@ -797,15 +798,17 @@
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get VASP Task Document using atomate2 settings.&quot;&quot;&quot;</span>
-    <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;store_additional_json&quot;</span><span class="p">,</span> <span class="n">SETTINGS</span><span class="o">.</span><span class="n">VASP_STORE_ADDITIONAL_JSON</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;store_additional_json&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;store_additional_json&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">SETTINGS</span><span class="o">.</span><span class="n">VASP_STORE_ADDITIONAL_JSON</span>
 
-    <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span>
-        <span class="s2">&quot;volume_change_warning_tol&quot;</span><span class="p">,</span> <span class="n">SETTINGS</span><span class="o">.</span><span class="n">VASP_VOLUME_CHANGE_WARNING_TOL</span>
-    <span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;volume_change_warning_tol&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;volume_change_warning_tol&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">SETTINGS</span><span class="o">.</span><span class="n">VASP_VOLUME_CHANGE_WARNING_TOL</span>
 
-    <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;run_bader&quot;</span><span class="p">,</span> <span class="n">SETTINGS</span><span class="o">.</span><span class="n">VASP_RUN_BADER</span> <span class="ow">and</span> <span class="n">_BADER_EXE_EXISTS</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;run_bader&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;run_bader&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">SETTINGS</span><span class="o">.</span><span class="n">VASP_RUN_BADER</span> <span class="ow">and</span> <span class="n">_BADER_EXE_EXISTS</span>
 
-    <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;store_volumetric_data&quot;</span><span class="p">,</span> <span class="n">SETTINGS</span><span class="o">.</span><span class="n">VASP_STORE_VOLUMETRIC_DATA</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;store_volumetric_data&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;store_volumetric_data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">SETTINGS</span><span class="o">.</span><span class="n">VASP_STORE_VOLUMETRIC_DATA</span>
 
     <span class="k">return</span> <span class="n">TaskDoc</span><span class="o">.</span><span class="n">from_directory</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 </pre></div>

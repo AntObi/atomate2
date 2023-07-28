@@ -727,7 +727,8 @@
                 <span class="n">transport_data</span> <span class="o">=</span> <span class="n">loadfn</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;transport_*.json&quot;</span><span class="p">)))</span>
                 <span class="n">converged</span> <span class="o">=</span> <span class="n">check_converged</span><span class="p">(</span><span class="n">transport_data</span><span class="p">,</span> <span class="n">loadfn</span><span class="p">(</span><span class="n">prev_transport_file</span><span class="p">))</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">task_document_kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;include_mesh&quot;</span><span class="p">,</span> <span class="n">converged</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;include_mesh&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_document_kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">task_document_kwargs</span><span class="p">[</span><span class="s2">&quot;include_mesh&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">converged</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span>
 
         <span class="c1"># parse amset outputs</span>
         <span class="n">task_doc</span> <span class="o">=</span> <span class="n">AmsetTaskDocument</span><span class="o">.</span><span class="n">from_directory</span><span class="p">(</span>

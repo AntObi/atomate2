@@ -757,7 +757,8 @@
     <span class="n">split_vasp_cmd</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">vasp_cmd</span><span class="p">)</span>
     <span class="n">split_vasp_gamma_cmd</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">vasp_gamma_cmd</span><span class="p">)</span>
 
-    <span class="n">vasp_job_kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;auto_npar&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;auto_npar&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">vasp_job_kwargs</span><span class="p">:</span>
+        <span class="n">vasp_job_kwargs</span><span class="p">[</span><span class="s2">&quot;auto_npar&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="n">vasp_job_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;gamma_vasp_cmd&quot;</span><span class="p">:</span> <span class="n">split_vasp_gamma_cmd</span><span class="p">})</span>
 
