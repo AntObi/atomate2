@@ -761,8 +761,7 @@
         <span class="k">if</span> <span class="n">prev_vasp_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">copy_vasp_outputs</span><span class="p">(</span><span class="n">prev_vasp_dir</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">copy_vasp_kwargs</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="s2">&quot;from_prev&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_input_set_kwargs</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">write_input_set_kwargs</span><span class="p">[</span><span class="s2">&quot;from_prev&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">from_prev</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_input_set_kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;from_prev&quot;</span><span class="p">,</span> <span class="n">from_prev</span><span class="p">)</span>
 
         <span class="c1"># write vasp input files</span>
         <span class="n">write_vasp_input_set</span><span class="p">(</span>
