@@ -624,16 +624,17 @@
         <article role="main">
           <h1>Source code for atomate2.common.schemas.elastic</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Schemas for elastic tensor fitting and related properties.&quot;&quot;&quot;</span>
-
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">emmet.core.math</span> <span class="kn">import</span> <span class="n">Matrix3D</span><span class="p">,</span> <span class="n">MatrixVoigt</span>
 <span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
 <span class="kn">from</span> <span class="nn">pymatgen.analysis.elasticity</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">Deformation</span><span class="p">,</span>
     <span class="n">ElasticTensor</span><span class="p">,</span>
     <span class="n">ElasticTensorExpansion</span><span class="p">,</span>
+    <span class="n">Strain</span><span class="p">,</span>
     <span class="n">Stress</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">pymatgen.core</span> <span class="kn">import</span> <span class="n">Structure</span>
@@ -807,17 +808,21 @@
 <span class="sd">            Whether to allow the ElasticDocument to still complete in the event that</span>
 <span class="sd">            the structure is elastically unstable.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">strains</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">green_lagrange_strain</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">deformations</span><span class="p">]</span>
+
         <span class="k">if</span> <span class="n">symprec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">deformations</span><span class="p">,</span> <span class="n">stresses</span><span class="p">,</span> <span class="n">uuids</span><span class="p">,</span> <span class="n">job_dirs</span> <span class="o">=</span> <span class="n">_expand_deformations</span><span class="p">(</span>
-                <span class="n">structure</span><span class="p">,</span> <span class="n">deformations</span><span class="p">,</span> <span class="n">stresses</span><span class="p">,</span> <span class="n">uuids</span><span class="p">,</span> <span class="n">job_dirs</span><span class="p">,</span> <span class="n">symprec</span>
+            <span class="n">strains</span><span class="p">,</span> <span class="n">stresses</span><span class="p">,</span> <span class="n">uuids</span><span class="p">,</span> <span class="n">job_dirs</span> <span class="o">=</span> <span class="n">_expand_strains</span><span class="p">(</span>
+                <span class="n">structure</span><span class="p">,</span> <span class="n">strains</span><span class="p">,</span> <span class="n">stresses</span><span class="p">,</span> <span class="n">uuids</span><span class="p">,</span> <span class="n">job_dirs</span><span class="p">,</span> <span class="n">symprec</span>
             <span class="p">)</span>
 
+        <span class="n">deformations</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">get_deformation_matrix</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">strains</span><span class="p">]</span>
+
+        <span class="c1"># -0.1 to convert units from kBar to GPa and stress direction</span>
+        <span class="n">stresses</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">stresses</span><span class="p">]</span>
         <span class="n">eq_stress</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">equilibrium_stress</span><span class="p">:</span>
             <span class="n">eq_stress</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">Stress</span><span class="p">(</span><span class="n">equilibrium_stress</span><span class="p">)</span>
 
-        <span class="n">strains</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">green_lagrange_strain</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">deformations</span><span class="p">]</span>
-        <span class="n">stresses</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">stresses</span><span class="p">]</span>
         <span class="n">pk_stresses</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">piola_kirchoff_2</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">stresses</span><span class="p">,</span> <span class="n">deformations</span><span class="p">)]</span>
 
         <span class="k">if</span> <span class="n">order</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -872,42 +877,59 @@
         <span class="p">)</span></div></div>
 
 
-<span class="k">def</span> <span class="nf">_expand_deformations</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="n">deformations</span><span class="p">,</span> <span class="n">stresses</span><span class="p">,</span> <span class="n">uuids</span><span class="p">,</span> <span class="n">job_dirs</span><span class="p">,</span> <span class="n">symprec</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Use symmetry to expand deformations.&quot;&quot;&quot;</span>
+<span class="k">def</span> <span class="nf">_expand_strains</span><span class="p">(</span>
+    <span class="n">structure</span><span class="p">:</span> <span class="n">Structure</span><span class="p">,</span>
+    <span class="n">strains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Strain</span><span class="p">],</span>
+    <span class="n">stresses</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Stress</span><span class="p">],</span>
+    <span class="n">uuids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">job_dirs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">symprec</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Use symmetry to expand strains.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">         tol: tolerance to determine if a strain component is zero. This should be</span>
+<span class="sd">            smaller than the smallest strain magnitude used to deform the structure.</span>
+
+<span class="sd">    Warning:</span>
+<span class="sd">        This function assumes that each deformed structure is generated from strain</span>
+<span class="sd">        state with only one non-zero component. If this is not the case, the expanded</span>
+<span class="sd">        strains will not contain the ones with other strain states. Also see:</span>
+<span class="sd">        `generate_elastic_deformations()`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">sga</span> <span class="o">=</span> <span class="n">SpacegroupAnalyzer</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="n">symprec</span><span class="o">=</span><span class="n">symprec</span><span class="p">)</span>
     <span class="n">symmops</span> <span class="o">=</span> <span class="n">sga</span><span class="o">.</span><span class="n">get_symmetry_operations</span><span class="p">(</span><span class="n">cartesian</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="n">full_deformations</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">deformations</span><span class="p">)</span>
+    <span class="n">full_strains</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">strains</span><span class="p">)</span>
     <span class="n">full_stresses</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">stresses</span><span class="p">)</span>
     <span class="n">full_uuids</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">uuids</span><span class="p">)</span>
     <span class="n">full_job_dirs</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">job_dirs</span><span class="p">)</span>
 
-    <span class="n">mapping</span> <span class="o">=</span> <span class="n">TensorMapping</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">deformation</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">deformations</span><span class="p">):</span>
-        <span class="n">mapping</span><span class="p">[</span><span class="n">deformation</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-
+    <span class="n">mapping</span> <span class="o">=</span> <span class="n">TensorMapping</span><span class="p">(</span><span class="n">full_strains</span><span class="p">,</span> <span class="p">[</span><span class="kc">True</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">full_strains</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">strain</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">strains</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">symmop</span> <span class="ow">in</span> <span class="n">symmops</span><span class="p">:</span>
-            <span class="c1"># rotate the deformation</span>
-            <span class="n">rotated_deformation</span> <span class="o">=</span> <span class="n">deformation</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">symmop</span><span class="p">)</span>
+            <span class="n">rotated_strain</span> <span class="o">=</span> <span class="n">strain</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">symmop</span><span class="p">)</span>
+
+            <span class="c1"># check if we have more than one perturbed strain component</span>
+            <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">rotated_strain</span><span class="o">.</span><span class="n">voigt</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">tol</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">continue</span>
 
             <span class="c1"># check if we have seen it before</span>
-            <span class="k">if</span> <span class="n">rotated_deformation</span> <span class="ow">in</span> <span class="n">mapping</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">rotated_strain</span> <span class="ow">in</span> <span class="n">mapping</span><span class="p">:</span>
                 <span class="k">continue</span>
 
-            <span class="c1"># check it is a valid deformation</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">Deformation</span><span class="p">(</span><span class="n">rotated_deformation</span><span class="p">)</span><span class="o">.</span><span class="n">is_independent</span><span class="p">():</span>
-                <span class="k">continue</span>
-
-            <span class="c1"># store the rotated deformation so we know we&#39;ve seen it</span>
-            <span class="n">mapping</span><span class="p">[</span><span class="n">rotated_deformation</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="c1"># store the rotated strain so we know we&#39;ve seen it</span>
+            <span class="n">mapping</span><span class="p">[</span><span class="n">rotated_strain</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
             <span class="c1"># expand the other properties</span>
-            <span class="n">full_deformations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rotated_deformation</span><span class="p">)</span>
+            <span class="n">full_strains</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rotated_strain</span><span class="p">)</span>
             <span class="n">full_stresses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stresses</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">symmop</span><span class="p">))</span>
             <span class="n">full_uuids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">uuids</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
             <span class="n">full_job_dirs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">job_dirs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
-    <span class="k">return</span> <span class="n">full_deformations</span><span class="p">,</span> <span class="n">full_stresses</span><span class="p">,</span> <span class="n">full_uuids</span><span class="p">,</span> <span class="n">full_job_dirs</span>
+    <span class="k">return</span> <span class="n">full_strains</span><span class="p">,</span> <span class="n">full_stresses</span><span class="p">,</span> <span class="n">full_uuids</span><span class="p">,</span> <span class="n">full_job_dirs</span>
 </pre></div>
         </article>
       </div>
