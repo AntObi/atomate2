@@ -1,6 +1,0 @@
-TYPE\_CHECKING
-==============
-
-.. currentmodule:: atomate2.vasp.jobs.phonons
-
-.. autodata:: TYPE_CHECKING

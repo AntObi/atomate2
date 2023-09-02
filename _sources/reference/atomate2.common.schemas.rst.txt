@@ -41,4 +41,5 @@ atomate2.common.schemas
    atomate2.common.schemas.cclib
    atomate2.common.schemas.defects
    atomate2.common.schemas.elastic
+   atomate2.common.schemas.phonons
 

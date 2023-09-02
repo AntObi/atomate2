@@ -21,6 +21,7 @@ atomate2.common.files
       get_zfile
       gunzip_files
       gzip_files
+      gzip_output_folder
       rename_files
 
 
@@ -29,6 +30,7 @@ atomate2.common.files
 
 
 
+   
    
    
    

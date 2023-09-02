@@ -19,6 +19,7 @@ atomate2.common.jobs.defect
       check_charge_state
       get_ccd_documents
       get_charged_structures
+      get_defect_entry
       get_supercell_from_prv_calc
       spawn_defect_q_jobs
       spawn_energy_curve_calcs
@@ -34,6 +35,7 @@ atomate2.common.jobs.defect
    
    
       
+   
    
    
    

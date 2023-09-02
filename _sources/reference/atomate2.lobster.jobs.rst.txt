@@ -19,6 +19,10 @@ atomate2.lobster.jobs
       
    
    
+      
+   
+   
+   
    
    
    
@@ -33,6 +37,7 @@ atomate2.lobster.jobs
       :toctree:
       :nosignatures:
    
+      LOBSTEROUTPUT_FILES
       LobsterMaker
 
 
