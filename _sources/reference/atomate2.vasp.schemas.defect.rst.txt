@@ -24,7 +24,6 @@ atomate2.vasp.schemas.defect
    
    
    
-   
 
 
    .. rubric:: Classes

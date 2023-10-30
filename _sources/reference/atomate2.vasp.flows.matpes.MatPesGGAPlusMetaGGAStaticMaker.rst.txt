@@ -1,0 +1,8 @@
+MatPesGGAPlusMetaGGAStaticMaker
+===============================
+
+.. currentmodule:: atomate2.vasp.flows.matpes
+
+.. autoclass:: MatPesGGAPlusMetaGGAStaticMaker
+   :show-inheritance:
+   :members:

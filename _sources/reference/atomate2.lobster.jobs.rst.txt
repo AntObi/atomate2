@@ -22,6 +22,8 @@ atomate2.lobster.jobs
       
    
    
+      
+   
    
    
    
@@ -39,6 +41,7 @@ atomate2.lobster.jobs
    
       LOBSTEROUTPUT_FILES
       LobsterMaker
+      VASP_OUTPUT_FILES
 
 
 

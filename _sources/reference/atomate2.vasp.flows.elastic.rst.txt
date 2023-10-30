@@ -27,7 +27,6 @@ atomate2.vasp.flows.elastic
    
    
    
-   
 
 
    .. rubric:: Classes

@@ -42,7 +42,6 @@ atomate2.common.schemas.phonons
    
    
    
-   
 
 
    .. rubric:: Classes

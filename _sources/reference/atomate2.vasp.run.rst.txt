@@ -40,7 +40,6 @@ atomate2.vasp.run
    
    
    
-   
 
 
    .. rubric:: Classes

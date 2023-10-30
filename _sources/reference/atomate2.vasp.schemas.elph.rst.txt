@@ -29,7 +29,6 @@ atomate2.vasp.schemas.elph
    
    
    
-   
 
 
    .. rubric:: Classes

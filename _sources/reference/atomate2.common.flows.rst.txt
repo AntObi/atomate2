@@ -39,4 +39,5 @@ atomate2.common.flows
    :recursive:
 
    atomate2.common.flows.defect
+   atomate2.common.flows.elastic
 

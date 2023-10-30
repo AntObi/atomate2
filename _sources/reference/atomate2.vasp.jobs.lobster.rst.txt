@@ -42,7 +42,6 @@ atomate2.vasp.jobs.lobster
    
    
    
-   
 
 
    .. rubric:: Classes

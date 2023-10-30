@@ -39,7 +39,6 @@ atomate2.lobster.schemas
    
    
    
-   
 
 
    .. rubric:: Classes

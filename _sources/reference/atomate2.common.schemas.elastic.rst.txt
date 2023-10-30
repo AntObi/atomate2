@@ -34,7 +34,6 @@ atomate2.common.schemas.elastic
    
    
    
-   
 
 
    .. rubric:: Classes

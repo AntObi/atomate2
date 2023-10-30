@@ -37,7 +37,6 @@ atomate2.vasp.files
    
    
    
-   
 
 
    .. rubric:: Classes

@@ -24,7 +24,6 @@ atomate2.vasp.drones
    
    
    
-   
 
 
    .. rubric:: Classes
